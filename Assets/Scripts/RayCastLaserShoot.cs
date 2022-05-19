@@ -63,6 +63,8 @@ public class RayCastLaserShoot : MonoBehaviour
     {
         laserAudio.Play();
         laserLine.enabled = true;
+        laserLine.startColor = Color.white;
+        laserLine.endColor = Color.magenta;
         yield return shotDuration;
         laserLine.enabled = false;
     }
