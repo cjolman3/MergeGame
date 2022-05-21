@@ -1,4 +1,4 @@
-# VoltronTest
+# Merge README
 First Iteration for Robot Game
 
 Download Unity
