@@ -11,7 +11,7 @@ public class RayCastLaserShoot : MonoBehaviour
     public float hitForce = 100f;
 
     public Transform head;
-    private WaitForSeconds shotDuration = new WaitForSeconds(.5f);
+    private WaitForSeconds shotDuration = new WaitForSeconds(1f);
     private AudioSource laserAudio;
     private LineRenderer laserLine;
     private float nextFire; 
@@ -27,8 +27,11 @@ public class RayCastLaserShoot : MonoBehaviour
     void Update()
     {
         var mouse = Mouse.current;
+        var gamepad = Gamepad.current;
+        bool isLeftMouseCLicked = mouse.leftButton.isPressed;
+        bool isRightTriggerPulled = gamepad.rightTrigger.isPressed;
         
-        if (mouse.press.isPressed && Time.time > nextFire) 
+        if ( (isLeftMouseCLicked || isRightTriggerPulled) && Time.time > nextFire) 
         {
             nextFire = Time.time + fireRate;
             StartCoroutine(ShotEffect());
