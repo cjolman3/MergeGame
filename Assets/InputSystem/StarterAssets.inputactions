@@ -253,13 +253,13 @@
             ]
         },
         {
-            "name": "InMenu",
-            "id": "b98e82a2-7831-4d35-b968-fb86553880d9",
+            "name": "UI",
+            "id": "f140a9a4-b110-4d70-93e5-f4d7457782ac",
             "actions": [
                 {
                     "name": "New action",
                     "type": "Button",
-                    "id": "30bc0538-7f9d-49b6-88cf-2f91fffbd57d",
+                    "id": "4b76ad48-b857-4a4e-96de-c3a21c506c67",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -269,7 +269,7 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "2b13d811-4af4-4626-832c-cac78d7eb3d8",
+                    "id": "2e9682b2-886d-4af5-ac9d-05e9f7a4fd03",
                     "path": "",
                     "interactions": "",
                     "processors": "",
