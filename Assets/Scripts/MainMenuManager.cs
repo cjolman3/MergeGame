@@ -22,8 +22,8 @@ public class MainMenuManager : MonoBehaviour
     void Update()
     {
         var keyboard = Keyboard.current;
-        var gamepad = Gamepad.current;
-        if(keyboard.escapeKey.isPressed || gamepad.selectButton.isPressed){
+        //var gamepad = Gamepad.current;
+        if(keyboard.escapeKey.isPressed) {//|| gamepad.selectButton.isPressed){
             m_Menu.SetActive(true);
         }
         //if(Input.GetButtonDown("MenuPress")){
