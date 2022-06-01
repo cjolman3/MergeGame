@@ -1,5 +1,6 @@
 ﻿namespace MoenenGames.VoxelRobot {
 	using UnityEngine;
+	using UnityEngine.InputSystem;
 	using System.Collections;
 	using System.Collections.Generic;
 
@@ -78,8 +79,8 @@
 		private AnimationCurve ScaleCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 1f) });
 		[SerializeField]
 		private Vector3 CurveRandom = Vector3.zero;
-		[SerializeField]
-		protected KeyCode AttackKey = KeyCode.Mouse0;
+		//[SerializeField]
+		//protected KeyCode AttackKey = KeyCode.Mouse0;
 
 		[Header("Component")]
 		[SerializeField] private ParticleSystem[] Particles = new ParticleSystem[0];
@@ -195,7 +196,7 @@
 
 		void KeyUpdate () {
 
-			if (Input.GetKey(AttackKey)) {
+			if (Mouse.current.leftButton.isPressed) {
 				if (ReadyToShoot) {
 					Attack();
 					PlayAllParticles();
@@ -284,7 +285,7 @@
 
 		private Vector3 GetMouseWorldPosition (Vector3 groundPosition, Vector3 groundNormal) {
 			Plane plane = new Plane(groundNormal, groundPosition);
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 			float distance;
 			if (plane.Raycast(ray, out distance)) {
 				return ray.origin + ray.direction * distance;
