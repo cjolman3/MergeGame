@@ -1,5 +1,6 @@
 ﻿namespace MoenenGames.VoxelRobot {
 	using UnityEngine;
+	using UnityEngine.InputSystem;
 	using System.Collections;
 
 	public class PlayerTurret : Turret {
@@ -36,7 +37,7 @@
 
 		private Vector3 GetMouseWorldPosition (Vector3 groundPosition, Vector3 groundNormal) {
 			Plane plane = new Plane(groundNormal, groundPosition);
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 			float distance;
 			if (plane.Raycast(ray, out distance)) {
 				return ray.origin + ray.direction * distance;

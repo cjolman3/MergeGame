@@ -1,11 +1,14 @@
 ﻿namespace MoenenGames.VoxelRobot {
 	using UnityEngine;
 	using System.Collections;
+	using UnityEngine.InputSystem;
 
 
 	public sealed class PlayerMovement : RobotMovement {
 
-
+		[Header("Cinemachine")]
+		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+		public GameObject CinemachineCameraTarget;
 
 
 		[SerializeField]
@@ -17,7 +20,8 @@
 		private float prevLTime = -1f;
 		private float prevRTime = -1f;
 
-
+		// cinemachine
+		private float _cinemachineTargetPitch;
 
 
 		protected override void Update () {
@@ -33,7 +37,7 @@
 
 
 			// Rot
-			if (Input.GetKey(KeyCode.LeftShift) || MouseFacing) {
+			if (Keyboard.current.shiftKey.isPressed || MouseFacing) {
 				RotateToMouse();
 			} else if (moveFB != null || moveLR != null) {
 				RotateToMovingDirction(moveFB, moveLR);
@@ -44,6 +48,11 @@
 
 		}
 
+		private void LateUpdate()
+		{
+			// Cinemachine will follow this target
+			CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+		}
 
 
 		void GetPlayerInput (out bool? moveLR, out bool? moveFB) {
@@ -51,7 +60,7 @@
 			moveLR = null;
 			moveFB = null;
 
-			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
+			if (Keyboard.current.wKey.isPressed) {
 				if (prevFTime < 0f) {
 					prevFTime = Time.time;
 				}
@@ -62,7 +71,7 @@
 				prevFTime = -1f;
 			}
 
-			if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+			if (Keyboard.current.sKey.isPressed) {
 				if (prevBTime < 0f) {
 					prevBTime = Time.time;
 				}
@@ -73,7 +82,7 @@
 				prevBTime = -1f;
 			}
 
-			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+			if (Keyboard.current.aKey.isPressed) {
 				if (prevLTime < 0f) {
 					prevLTime = Time.time;
 				}
@@ -84,7 +93,7 @@
 				prevLTime = -1f;
 			}
 
-			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+			if (Keyboard.current.dKey.isPressed) {
 				if (prevRTime < 0f) {
 					prevRTime = Time.time;
 				}
@@ -138,7 +147,7 @@
 
 		private Vector3 GetMouseWorldPosition (Vector3 groundPosition, Vector3 groundNormal) {
 			Plane plane = new Plane(groundNormal, groundPosition);
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 			float distance;
 			if (plane.Raycast(ray, out distance)) {
 				return ray.origin + ray.direction * distance;
