@@ -6,7 +6,9 @@
 
 	public sealed class PlayerMovement : RobotMovement {
 
-
+		[Header("Cinemachine")]
+		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+		public GameObject CinemachineCameraTarget;
 
 
 		[SerializeField]
@@ -18,7 +20,8 @@
 		private float prevLTime = -1f;
 		private float prevRTime = -1f;
 
-
+		// cinemachine
+		private float _cinemachineTargetPitch;
 
 
 		protected override void Update () {
@@ -45,6 +48,11 @@
 
 		}
 
+		private void LateUpdate()
+		{
+			// Cinemachine will follow this target
+			CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+		}
 
 
 		void GetPlayerInput (out bool? moveLR, out bool? moveFB) {
